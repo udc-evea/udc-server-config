@@ -4,13 +4,13 @@
 doc_root="/opt/lampp/htdocs"
 status="${doc_root}/status/gitsync.status"
 ERROR=0
-web_assets_source="/root/udc_server_config/www/status/"
+web_assets_source="/root/udc-server-config/www/status/"
 web_assets_dest="${doc_root}/status/"
 
 echo "Sincronización de proyectos Git" > $status
 
 echo "====== PROYECTO: server_config =====" >> $status
-cd /root/udc_server_config
+cd /root/udc-server-config
 nice -n 20 /usr/bin/time -f'Tiempo total de descarga: %E' git fetch >> $status 2>&1
 git log -1 >> $status 2>&1
 nice -n 20 git rebase origin >> $status 2>&1
