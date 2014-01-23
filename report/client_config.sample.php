@@ -4,8 +4,8 @@
   $php_bin  = "/opt/lampp/bin/php";
   
   //si se instalo LAMPP via apt-get
-  $doc_root = "//var/www";
-  $php_bin  = "/usr/bin/php";
+//  $doc_root = "/var/www";
+//  $php_bin  = "/usr/bin/php";
   
   //datos de red
   $hash = "1e06432b70105cc3e2c8a8bf0ad5e763"; //prueba
