@@ -1,0 +1,6 @@
+0,5,10,15,20,25,30,35,40,45,50,55 * * * * /usr/bin/php  /opt/lampp/htdocs/moodle/admin/cli/cron.php
+*/10 * * * * /root/udc_server_config/sync/moodledata
+*/10 * * * * /root/udc_server_config/sync/mysql
+*/25 * * * * /root/udc_server_config/sync/git
+5,35 * * * * /root/udc_server_config/report/client
+

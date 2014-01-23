@@ -1,0 +1,53 @@
+#!/usr/bin/php
+<?php
+  $doc_root = "/opt/lampp/htdocs";
+  
+  $rsync_status_file = "$doc_root/status/datasync.status";
+  $mysql_replication_status_file = "$doc_root/status/mysql_replication.status";
+  $gitsync_status_file = "/$doc_root/status/gitsync.status";
+
+  require_once dirname(__FILE__).'/client_config.php';
+
+  $report_rsync   = file_get_contents($rsync_status_file);
+  $report_mysql   = file_get_contents($mysql_replication_status_file);
+  $report_gitsync = file_get_contents($gitsync_status_file);
+
+  $report_template = <<<EOF
+*****************************************************************
+REPORTE DE ESTADO - SERVER HASH %s
+FECHA/HORA: %s
+*****************************************************************
+
+ESTADO SINC. ARCHIVOS
+-----------------------------------------------------------------
+%s
+------------------------------------------------------------------
+FIN REPORTE
+
+ESTADO REPLICACION BD
+-----------------------------------------------------------------
+%s
+------------------------------------------------------------------
+FIN REPORTE
+
+
+ESTADO GIT SYNC
+-----------------------------------------------------------------
+%s
+------------------------------------------------------------------
+FIN REPORTE
+EOF;
+
+  $data = array('hash' => $hash, 'report' => sprintf($report_template, $hash, date("Y/m/d h:i:s"), $report_rsync, $report_mysql, $report_gitsync));
+
+  // use key 'http' even if you send the request to https://...
+  $options = array('http' => array('method'  => 'POST','content' => http_build_query($data), 'header' => 'Content-type: application/x-www-form-urlencoded'));
+  if(isset($proxy))
+  {
+    $options['http']['proxy'] = $proxy;
+    $options['http']['request_fulluri'] = true;
+  }
+
+
+  $context  = stream_context_create($options);
+  $result = file_get_contents($url, false, $context);

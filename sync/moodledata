@@ -1,0 +1,36 @@
+#!/bin/bash
+# moodledata : Sincroniza los archivos de los cursos (/var/moodledata/filedir
+moodledata_path="/opt/lampp/moodledata"
+doc_root="/opt/lampp/htdocs"
+
+status="${doc_root}/status/datasync.status"
+
+if [ -d /tmp/.rsync.lock ]; then
+echo "ERROR: ya existe bloqueo rsync: Quizás hay demasiados datos para descargar. Se reintentará más tarde." > $status
+exit 1
+fi
+
+/bin/mkdir /tmp/.rsync.lock
+
+if [ $? != "0" ]; then
+echo "ERROR: no se pudo crear bloqueo de descarga rsync" > $status
+/bin/rm -rf /tmp/.rsync.lock
+exit 1
+else
+echo "Bloqueo de descarga creado" > $status
+fi
+
+echo "===== Beginning rsync ====="
+
+nice -n 20 /usr/bin/time -f'Tiempo total: %E' /usr/bin/rsync --out-format="%f (%l bytes)" -axvzh --delete -e ssh root@test.udc.edu.ar:${moodledata_path}/filedir/ ${moodledata_path}/filedir/ > $status 2>&1 
+CODE=$?
+if [ $CODE != "0" ]; then
+echo "ERROR: falló descarga rsync. Revise la salida del comando para solucionar el problema (error $CODE)." >> $status
+/bin/rm -rf /tmp/.rsync.lock
+exit 1
+fi
+
+echo "===== Completed rsync ====="
+
+/bin/rm -rf /tmp/.rsync.lock
+echo "EXITO: sincronización moodledata completa-`date`" >> $status

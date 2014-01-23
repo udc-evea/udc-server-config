@@ -1,0 +1,13 @@
+[mysqld]
+server-id=6
+
+log-bin=mysql-bin
+log-error=mysql-bin.err
+relay-log=mysqld-relay-bin
+log-slow-queries
+
+replicate-do-db=moodle
+replicate-ignore-table=moodle.mdl_log
+replicate-ignore-table=moodle.mdl_cache_text
+replicate-ignore-table=moodle.mdl_cache_flags
+replicate-ignore-table=moodle.mdl_sessions

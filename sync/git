@@ -1,0 +1,53 @@
+#!/bin/bash
+# git_sync.sh: actualiza proyectos versionados con git
+
+doc_root="/opt/lampp/htdocs"
+status="${doc_root}/status/gitsync.status"
+ERROR=0
+web_assets_source="/root/udc_server_config/www/status/"
+web_assets_dest="${doc_root}/status/"
+
+echo "Sincronización de proyectos Git" > $status
+
+echo "====== PROYECTO: server_config =====" >> $status
+cd /root/udc_server_config
+nice -n 20 /usr/bin/time -f'Tiempo total de descarga: %E' git fetch >> $status 2>&1
+git log -1 >> $status 2>&1
+nice -n 20 git rebase origin >> $status 2>&1
+
+CODE=$?
+if [ $CODE != "0" ]; then
+echo "ERROR: falló la sincronización. Revise la salida del comando para solucionar el problema (error $CODE)." >> $status
+ERROR=1
+fi
+
+echo "====== PROYECTO: server_config (web assets) =====" >> $status
+rsync -axvzh --delete --exclude='*.status' $web_assets_source $web_assets_dest >> $status 2>&1
+touch $web_assets_dest/datasync.status
+touch $web_assets_dest/mysql_replication.status
+touch $web_assets_dest/gitsync.status
+
+CODE=$?
+if [ $CODE != "0" ]; then
+echo "ERROR: falló la sincronización. Revise la salida del comando para solucionar el problema (error $CODE)." >> $status
+ERROR=1
+fi
+
+echo "====== PROYECTO: moodle_interior =====" >> $status
+cd ${doc_root}/moodle
+git add .
+nice -n 20 git reset --hard >> $status 2>&1
+nice -n 20 /usr/bin/time -f'Tiempo total de descarga: %E' git fetch >> $status 2>&1
+nice -n 20 git reset --hard >> $status 2>&1
+nice -n 20 git rebase origin/interior interior >> $status 2>&1
+git log -1 >> $status 2>&1
+
+CODE=$?
+if [ $CODE != "0" ]; then
+echo "ERROR: falló la sincronización. Revise la salida del comando para solucionar el problema (error $CODE)." >> $status
+ERROR=1
+fi
+
+if [ $ERROR -eq "0" ]; then
+  echo "EXITO: sincronización de código completa-`date`" >> $status
+fi
