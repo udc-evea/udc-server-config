@@ -1,4 +1,4 @@
-#!/usr/bin/php
+#!/opt/lampp/bin/php
 <?php
 // mysql: actualiza estado de replicación de mysql
 $doc_root = "/opt/lampp/htdocs";

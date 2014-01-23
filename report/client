@@ -1,11 +1,5 @@
-#!/usr/bin/php
+#!/opt/lampp/bin//php
 <?php
-  $doc_root = "/opt/lampp/htdocs";
-  
-  $rsync_status_file = "$doc_root/status/datasync.status";
-  $mysql_replication_status_file = "$doc_root/status/mysql_replication.status";
-  $gitsync_status_file = "/$doc_root/status/gitsync.status";
-
   require_once dirname(__FILE__).'/client_config.php';
 
   $report_rsync   = file_get_contents($rsync_status_file);
