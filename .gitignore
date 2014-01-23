@@ -1,0 +1,6 @@
+/nbproject/private/
+www/status/conexion_bd.php
+www/status/datasync.status
+www/status/mysql_replication.status
+www/status/gitsync.status
+report/client_config.php
