@@ -4,7 +4,7 @@ server-id=6
 log-bin=mysql-bin
 log-error=mysql-bin.err
 relay-log=mysqld-relay-bin
-log-slow-queries
+binlog_format=row
 
 replicate-do-db=moodle
 replicate-ignore-table=moodle.mdl_log

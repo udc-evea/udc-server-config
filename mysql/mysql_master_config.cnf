@@ -3,7 +3,7 @@ server-id=1
 
 log-bin=mysql-bin
 log-error=mysql-bin.err
-log-slow-queries
 
 binlog-do-db=moodle
-expire_logs_days=90
+expire_logs_days=99
+binlog_format=row
