@@ -11,6 +11,7 @@ echo "Sincronización de proyectos Git" > $status
 
 echo "====== PROYECTO: server_config =====" >> $status
 cd /root/udc-server-config
+git add .
 nice -n 20 time -f'Tiempo total de descarga: %E' git fetch >> $status 2>&1
 git log -1 >> $status 2>&1
 nice -n 20 git rebase origin >> $status 2>&1
