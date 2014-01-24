@@ -22,10 +22,12 @@ ERROR=1
 fi
 
 echo "====== PROYECTO: server_config (web assets) =====" >> $status
-rsync -axvzh --delete --exclude='*.status conexion_bd.php' $web_assets_source $web_assets_dest >> $status 2>&1
+rsync -axvzh --delete --exclude='*.status' --exclude='conexion_bd.php' $web_assets_source $web_assets_dest >> $status 2>&1
 touch $web_assets_dest/datasync.status
 touch $web_assets_dest/mysql_replication.status
 touch $web_assets_dest/gitsync.status
+chmod 664 $web_assets_dest/mysql_replication.status
+chgrp daemon $web_assets_dest/mysql_replication.status
 
 CODE=$?
 if [ $CODE != "0" ]; then
