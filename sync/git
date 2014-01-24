@@ -11,7 +11,7 @@ echo "Sincronización de proyectos Git" > $status
 
 echo "====== PROYECTO: server_config =====" >> $status
 cd /root/udc-server-config
-nice -n 20 /usr/bin/time -f'Tiempo total de descarga: %E' git fetch >> $status 2>&1
+nice -n 20 time -f'Tiempo total de descarga: %E' git fetch >> $status 2>&1
 git log -1 >> $status 2>&1
 nice -n 20 git rebase origin >> $status 2>&1
 
@@ -22,7 +22,7 @@ ERROR=1
 fi
 
 echo "====== PROYECTO: server_config (web assets) =====" >> $status
-rsync -axvzh --delete --exclude='*.status' $web_assets_source $web_assets_dest >> $status 2>&1
+rsync -axvzh --delete --exclude='*.status conexion_bd.php' $web_assets_source $web_assets_dest >> $status 2>&1
 touch $web_assets_dest/datasync.status
 touch $web_assets_dest/mysql_replication.status
 touch $web_assets_dest/gitsync.status
@@ -37,7 +37,7 @@ echo "====== PROYECTO: moodle_interior =====" >> $status
 cd ${doc_root}/moodle
 git add .
 nice -n 20 git reset --hard >> $status 2>&1
-nice -n 20 /usr/bin/time -f'Tiempo total de descarga: %E' git fetch >> $status 2>&1
+nice -n 20 time -f'Tiempo total de descarga: %E' git fetch >> $status 2>&1
 nice -n 20 git reset --hard >> $status 2>&1
 nice -n 20 git rebase origin/interior interior >> $status 2>&1
 git log -1 >> $status 2>&1

@@ -22,7 +22,7 @@ fi
 
 echo "===== Beginning rsync ====="
 
-nice -n 20 /usr/bin/time -f'Tiempo total: %E' /usr/bin/rsync --out-format="%f (%l bytes)" -axvzh --delete -e ssh root@test.udc.edu.ar:${moodledata_path}/filedir/ ${moodledata_path}/filedir/ > $status 2>&1 
+nice -n 20 time -f'Tiempo total: %E' /usr/bin/rsync --out-format="%f (%l bytes)" -axvzh --delete -e ssh root@test.udc.edu.ar:${moodledata_path}/filedir/ ${moodledata_path}/filedir/ > $status 2>&1 
 CODE=$?
 if [ $CODE != "0" ]; then
 echo "ERROR: falló descarga rsync. Revise la salida del comando para solucionar el problema (error $CODE)." >> $status
