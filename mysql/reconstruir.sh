@@ -11,3 +11,6 @@ gunzip -c moodle.sql.gz | mysql -u root -p
 
 # reinicia la replicación
 /opt/lampp/bin/mysqladmin -u root -p start-slave
+
+# elimino el backup
+rm moodle.sql.gz
