@@ -9,7 +9,7 @@
   
   //datos de red
   $hash = "1e06432b70105cc3e2c8a8bf0ad5e763"; //prueba
-  $url = "http://social.udc.edu.ar/udc_apps/backend.php/servers/$hash/report";
+  $url = "http://test.udc.edu.ar/gestor_distribuido/index.php/server/$hash/report";
   //$proxy = 'tcp://10.0.0.1:3128';
 
   //no es necesario cambiar esto
