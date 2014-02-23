@@ -4,6 +4,7 @@
 set -e
 project_root=`pwd`
 doc_root="/opt/lampp/htdocs"
+apache_user="daemon"
 status="${doc_root}/status/gitsync.status"
 ERROR=0
 web_assets_source="/${project_root}/www/status"
@@ -24,8 +25,9 @@ ERROR=1
 fi
 
 touch ${project_root}/www/status/datasync.status
-touch ${project_root}/www/status/mysql_replication.status
 touch ${project_root}/www/status/gitsync.status
+touch ${project_root}/www/status/mysql_replication.status
+chown ${apache_user} ${project_root}/www/status/mysql_replication.status
 
 CODE=$?
 if [ $CODE != "0" ]; then
