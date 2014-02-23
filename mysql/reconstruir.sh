@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 # detiene la replicación 
 /opt/lampp/bin/mysqladmin -u root -p stop-slave
