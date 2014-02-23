@@ -13,9 +13,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width">
     
-    <link rel="stylesheet" type="text/css" media="screen" href="/bootstrap/css/bootstrap.min.css" />
-    <script src="/jquery/js/jquery.min.js"></script>
-    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/bootstrap/css/bootstrap.min.css" />
+    <script src="assets/jquery-1.10.2.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
   </head>
   <body>
   <!--[if lt IE 8]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
