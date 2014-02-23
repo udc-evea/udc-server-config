@@ -5,7 +5,6 @@ doc_root="/opt/lampp/htdocs"
 status="${doc_root}/status/gitsync.status"
 ERROR=0
 web_assets_source="/home/gmart/udc-server-config/www/status/"
-web_assets_dest="${doc_root}/status/"
 
 echo "Sincronización de proyectos Git" > $status
 
@@ -22,13 +21,9 @@ echo "ERROR: falló la sincronización. Revise la salida del comando para soluci
 ERROR=1
 fi
 
-echo "====== PROYECTO: server_config (web assets) =====" >> $status
-rsync -axvzh --delete --exclude='*.status' --exclude='conexion_bd.php' $web_assets_source $web_assets_dest >> $status 2>&1
 touch $web_assets_dest/datasync.status
 touch $web_assets_dest/mysql_replication.status
 touch $web_assets_dest/gitsync.status
-chmod 664 $web_assets_dest/mysql_replication.status
-chgrp daemon $web_assets_dest/mysql_replication.status
 
 CODE=$?
 if [ $CODE != "0" ]; then
