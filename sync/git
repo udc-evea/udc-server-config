@@ -2,15 +2,16 @@
 # git_sync.sh: actualiza proyectos versionados con git
 
 set -e
+project_root=`pwd`
 doc_root="/opt/lampp/htdocs"
 status="${doc_root}/status/gitsync.status"
 ERROR=0
-web_assets_source="/home/gmart/udc-server-config/www/status/"
+web_assets_source="/${project_root}/www/status"
 
 echo "Sincronización de proyectos Git" > $status
 
 echo "====== PROYECTO: server_config =====" >> $status
-cd /home/gmart/udc-server-config
+cd ${project_root}
 git add .
 nice -n 20 time -f'Tiempo total de descarga: %E' git fetch >> $status 2>&1
 git log -1 >> $status 2>&1
@@ -22,9 +23,9 @@ echo "ERROR: falló la sincronización. Revise la salida del comando para soluci
 ERROR=1
 fi
 
-touch status/datasync.status
-touch status/mysql_replication.status
-touch status/gitsync.status
+touch ${project_root}/www/status/datasync.status
+touch ${project_root}/www/status/mysql_replication.status
+touch ${project_root}/www/status/gitsync.status
 
 CODE=$?
 if [ $CODE != "0" ]; then
