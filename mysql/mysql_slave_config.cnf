@@ -1,5 +1,5 @@
 [mysqld]
-server-id=6
+server-id=666
 
 log-bin=mysql-bin
 log-error=mysql-bin.err

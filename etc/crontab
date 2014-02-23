@@ -1,6 +1,6 @@
 0,5,10,15,20,25,30,35,40,45,50,55 * * * * /opt/lampp/bin/php  /opt/lampp/htdocs/moodle/admin/cli/cron.php
-*/10 * * * * /home/gmart/udc-server-config/sync/moodledata
-*/10 * * * * /home/gmart/udc-server-config/sync/mysql
-*/25 * * * * /home/gmart/udc-server-config/sync/git
-5,35 * * * * /home/gmart/udc-server-config/report/client
+*/10 * * * * /home/interior/udc-server-config/sync/moodledata
+*/10 * * * * /home/interior/udc-server-config/sync/mysql
+*/25 * * * * /home/interior/udc-server-config/sync/git
+5,35 * * * * /home/interior/udc-server-config/report/client
 
