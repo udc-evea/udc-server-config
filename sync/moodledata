@@ -1,5 +1,7 @@
 #!/bin/bash
 # moodledata : Sincroniza los archivos de los cursos (/var/moodledata/filedir
+set -e
+
 moodledata_path="/opt/lampp/moodledata"
 doc_root="/opt/lampp/htdocs"
 
