@@ -11,7 +11,7 @@ ssh -C test.udc.edu.ar "/opt/lampp/bin/mysqldump -p  --master-data --add-drop-da
 
 # restaura el backup
 echo "BASE LOCAL: restaurar backup."
-gunzip -c moodle.sql.gz | mysql -u root -p
+gunzip -c moodle.sql.gz | /opt/lampp/bin/mysql -u root -p
 
 # reinicia la replicación
 echo "BASE LOCAL: reanudar replicación."
