@@ -2,10 +2,10 @@
 # git_sync.sh: actualiza proyectos versionados con git
 
 set -e
-project_root=`pwd`
+project_root="/home/interior/udc-server-config"
 doc_root="/opt/lampp/htdocs"
 apache_user="daemon"
-status="${project_root}/status/gitsync.status"
+status="${project_root}/www/status/gitsync.status"
 ERROR=0
 web_assets_source="/${project_root}/www/status"
 
