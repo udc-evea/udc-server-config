@@ -6,6 +6,9 @@ log-error=mysql-bin.err
 relay-log=mysqld-relay-bin
 binlog_format=row
 
+relay_log_info_repository = TABLE
+relay_log_recovery = ON
+
 replicate-do-db=moodle
 replicate-ignore-table=moodle.mdl_log
 replicate-ignore-table=moodle.mdl_cache_text
