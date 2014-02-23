@@ -1,4 +1,4 @@
-#!/opt/lampp/bin//php
+#!/opt/lampp/bin/php
 <?php
   require_once dirname(__FILE__).'/client_config.php';
 
