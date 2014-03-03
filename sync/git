@@ -51,5 +51,5 @@ ERROR=1
 fi
 
 if [ $ERROR -eq "0" ]; then
-  echo "EXITO: sincronización de código completa-`date`" >> $status
+  echo "EXITO: sincronizacion de codigo completa-`date`" >> $status
 fi

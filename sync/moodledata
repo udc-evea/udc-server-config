@@ -35,4 +35,4 @@ fi
 echo "===== Completed rsync ====="
 
 /bin/rm -rf /tmp/.rsync.lock
-echo "EXITO: sincronización moodledata completa-`date`" >> $status
+echo "EXITO: sincronizacion moodledata completa-`date`" >> $status
