@@ -27,7 +27,6 @@ fi
 touch ${project_root}/www/status/datasync.status
 touch ${project_root}/www/status/gitsync.status
 touch ${project_root}/www/status/mysql_replication.status
-chown ${apache_user} ${project_root}/www/status/mysql_replication.status
 
 CODE=$?
 if [ $CODE != "0" ]; then
