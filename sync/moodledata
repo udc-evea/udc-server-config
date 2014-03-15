@@ -1,38 +1,35 @@
 #!/bin/bash
-# moodledata : Sincroniza los archivos de los cursos (/var/moodledata/filedir
+# moodledata : Sincroniza los archivos de los cursos (/var/moodledata/filedir)
+
 set -e
 
 moodledata_path="/opt/lampp/moodledata"
 doc_root="/opt/lampp/htdocs"
-
 status="${doc_root}/status/datasync.status"
 
+quitar_bloqueo() {
+  echo "ERROR: PROCESO RSYNC FALLIDO." | tee -a $status
+  /bin/rm -rf /tmp/.rsync.lock
+}
+
+trap quitar_bloqueo ERR
+
+echo "" > $status
+
 if [ -d /tmp/.rsync.lock ]; then
-echo "ERROR: ya existe bloqueo rsync: Quizás hay demasiados datos para descargar. Se reintentará más tarde." > $status
-exit 1
+  echo "ERROR: ya existe bloqueo rsync: Quizás hay demasiados datos para descargar. Se reintentará más tarde." | tee -a $status
+  exit 1
 fi
 
-/bin/mkdir /tmp/.rsync.lock
+echo "Creando bloqueo..." | tee -a $status
+/bin/mkdir -p /tmp/.rsync.lock
 
-if [ $? != "0" ]; then
-echo "ERROR: no se pudo crear bloqueo de descarga rsync" > $status
+echo "===== Beginning rsync =====" | tee -a $status
+nice -n 20 time -f'Tiempo total: %E' /usr/bin/rsync --out-format="%f (%l bytes)" -axvzh --delete -e ssh test.udc.edu.ar:${moodledata_path}/filedir/ ${moodledata_path}/filedir/ >> $status 2>&1
+CODE="$?"
+echo "===== Completed rsync =====" | tee -a $status
+
+echo "Eliminando bloqueo..." | tee -a $status
 /bin/rm -rf /tmp/.rsync.lock
-exit 1
-else
-echo "Bloqueo de descarga creado" > $status
-fi
 
-echo "===== Beginning rsync ====="
-
-nice -n 20 time -f'Tiempo total: %E' /usr/bin/rsync --out-format="%f (%l bytes)" -axvzh --delete -e ssh test.udc.edu.ar:${moodledata_path}/filedir/ ${moodledata_path}/filedir/ > $status 2>&1 
-CODE=$?
-if [ $CODE != "0" ]; then
-echo "ERROR: falló descarga rsync. Revise la salida del comando para solucionar el problema (error $CODE)." >> $status
-/bin/rm -rf /tmp/.rsync.lock
-exit 1
-fi
-
-echo "===== Completed rsync ====="
-
-/bin/rm -rf /tmp/.rsync.lock
-echo "EXITO: sincronizacion moodledata completa-`date`" >> $status
+echo "EXITO: sincronizacion moodledata completa-`date`" | tee -a $status

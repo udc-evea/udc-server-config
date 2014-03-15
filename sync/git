@@ -2,53 +2,43 @@
 # git_sync.sh: actualiza proyectos versionados con git
 
 set -e
+
 project_root="/home/interior/udc-server-config"
 doc_root="/opt/lampp/htdocs"
 apache_user="daemon"
 status="${project_root}/www/status/gitsync.status"
-ERROR=0
 web_assets_source="/${project_root}/www/status"
 
-echo "Sincronización de proyectos Git" > $status
+salir() {
+  echo "ERROR: PROCESO GIT FALLIDO." | tee -a $status
+}
 
-echo "====== PROYECTO: server_config =====" >> $status
+trap salir ERR
+
+echo "" > $status
+
+echo "Sincronización de proyectos Git" | tee -a $status
+
+echo "====== PROYECTO: server_config =====" | tee -a $status
 cd ${project_root}
 git add .
+git stash save
 nice -n 20 time -f'Tiempo total de descarga: %E' git fetch >> $status 2>&1
-git log -1 >> $status 2>&1
+git log -1 | tee -a $status
 nice -n 20 git rebase origin >> $status 2>&1
-
-CODE=$?
-if [ $CODE != "0" ]; then
-echo "ERROR: falló la sincronización. Revise la salida del comando para solucionar el problema (error $CODE)." >> $status
-ERROR=1
-fi
 
 touch ${project_root}/www/status/datasync.status
 touch ${project_root}/www/status/gitsync.status
 touch ${project_root}/www/status/mysql_replication.status
 
-CODE=$?
-if [ $CODE != "0" ]; then
-echo "ERROR: falló la sincronización. Revise la salida del comando para solucionar el problema (error $CODE)." >> $status
-ERROR=1
-fi
-
-echo "====== PROYECTO: moodle_interior =====" >> $status
+echo "====== PROYECTO: moodle_interior =====" | tee -a $status
 cd ${doc_root}/moodle
 git add .
+git stash save
 nice -n 20 git reset --hard >> $status 2>&1
 nice -n 20 time -f'Tiempo total de descarga: %E' git fetch >> $status 2>&1
 nice -n 20 git reset --hard >> $status 2>&1
 nice -n 20 git rebase origin/master >> $status 2>&1
-git log -1 >> $status 2>&1
+git log -1 | tee -a $status
 
-CODE=$?
-if [ $CODE != "0" ]; then
-echo "ERROR: falló la sincronización. Revise la salida del comando para solucionar el problema (error $CODE)." >> $status
-ERROR=1
-fi
-
-if [ $ERROR -eq "0" ]; then
-  echo "EXITO: sincronizacion de codigo completa-`date`" >> $status
-fi
+echo "EXITO: sincronizacion de codigo completa-`date`" | tee -a $status
