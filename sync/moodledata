@@ -32,4 +32,4 @@ echo "===== Completed rsync =====" | tee -a $status
 echo "Eliminando bloqueo..." | tee -a $status
 /bin/rm -rf /tmp/.rsync.lock
 
-echo "EXITO: sincronizacion moodledata completa-`date`" | tee -a $status
+echo "EXITO: sincronizacion moodledata completa-`date +\"%d/%m/%Y %H:%M:%S\"`" | tee -a $status
