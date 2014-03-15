@@ -41,4 +41,4 @@ nice -n 20 git reset --hard >> $status 2>&1
 nice -n 20 git rebase origin/master >> $status 2>&1
 git log -1 | tee -a $status
 
-echo "EXITO: sincronizacion de codigo completa-`echo "EXITO: sincronizacion moodledata completa-`date +\"%d/%m/%Y %H:%M:%S\"`" | tee -a $status
+echo "EXITO: sincronizacion moodledata completa-`date +\"%d/%m/%Y %H:%M:%S\"`" | tee -a $status
